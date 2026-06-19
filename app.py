@@ -48,16 +48,11 @@ if user_input:
             "content": user_input
         }
     )
-    
-    
-    st.write("Question received")
-    
+        
     answer = generate_response(
         st.session_state.messages
     )
-    
-    st.write(answer)
-    
+        
     st.session_state.messages.append(
         {
             "role": "assistant",
