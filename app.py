@@ -4,40 +4,34 @@ from chatbot import generate_response
 from prompts import MODES
 
 
+#page title
+st.title('🎓 AI STUDY ASSISTANT')
 
-##NOW WE CREATE THE PAGE TITLE
-
-st.title("🎓 AI STUDY ASSISTANT")
-
-
-##SIDEBAR
-
+#sidebar
 mode = st.sidebar.selectbox(
-    "Learning Mode",
+    "learning mode",
     list(MODES.keys())
 )
 
 
-##memory storage
-
+##memory stage
 if "messages" not in st.session_state:
     st.session_state.messages = []
     
 
 ##user input
 user_input = st.chat_input(
-    "Ask a question"
+    "ask a question..."
 )
 
 
 ##response generation
-
 if user_input:
     if len(st.session_state.messages) == 0:
         
         st.session_state.messages.append(
             {
-                "role": "system",
+                'role': "system",
                 "content": MODES[mode]
             }
         )
@@ -48,30 +42,28 @@ if user_input:
             "content": user_input
         }
     )
-        
+    
     answer = generate_response(
         st.session_state.messages
     )
-        
+    
+    
     st.session_state.messages.append(
         {
             "role": "assistant",
             "content": answer
         }
     )
+    
+    
+    
+    
 
-
-
-##time to display the chat
-
+#displaying the chat
 for msg in st.session_state.messages:
     
     if msg["role"] == "user":
-        st.chat_message("user").write(
-            msg["content"]
-        )
-
-    elif msg["role"] == "assitant":
-        st.chat_message("assistant").write(
-            msg["content"]
-        )
+        st.chat_message("user").write(msg["content"])
+    
+    elif msg["role"] == "assistant":
+        st.chat_message("assistant").write(msg["content"])
